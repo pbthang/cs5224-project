@@ -23,7 +23,9 @@ function Hero({
         <h1 className="font-bold text-3xl">{title}</h1>
         <h3 className="font-light text-lg">{subtitle}</h3>
         {children ?? (
-          <div className="flex gap-4 justify-center">{children}</div>
+          <div className="flex gap-4 justify-center items-center">
+            {children}
+          </div>
         )}
       </div>
     </section>

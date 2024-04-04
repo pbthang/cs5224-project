@@ -32,6 +32,7 @@ export const LandingPage = () => {
       </Hero>
       <div className="px-8 md:px-16 py-10">
         <h2 className="text-3xl font-bold text-center">Landing Page</h2>
+        <div>Logged in as {user?.fullName}</div>
         <div>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio
           totam ullam, placeat deleniti ut voluptatem accusantium? Sed
