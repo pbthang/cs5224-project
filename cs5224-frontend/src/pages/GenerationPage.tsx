@@ -1,24 +1,6 @@
 import PortfolioForm from "@/PortfolioForm";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/clerk-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,6 +8,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import useLocalStorage from "use-local-storage";
 import { z } from "zod";
+import UploadResumeDialog from "@/components/UploadResumeDialog";
 
 const formSchema = z.object({
   name: z.string(),
@@ -111,7 +94,7 @@ function GenerationPage() {
           <Button asChild className="mr-2 text-white" variant={"link"}>
             <Link to="/">Back to Home</Link>
           </Button>
-          <UploadResumeDialog />
+          <UploadResumeDialog setValue={form.setValue} />
           <Button onClick={clearForm} className="ml-4" variant={"secondary"}>
             Reset Form
           </Button>
@@ -121,67 +104,6 @@ function GenerationPage() {
         <PortfolioForm form={form} setFormValues={setFormValues} />
       </div>
     </div>
-  );
-}
-
-const uploadResumeSchema = z.object({
-  resume: z
-    .instanceof(FileList)
-    .refine((file) => file?.length == 1, "File is required."),
-});
-
-function UploadResumeDialog() {
-  const form = useForm<z.infer<typeof uploadResumeSchema>>({
-    resolver: zodResolver(uploadResumeSchema),
-    defaultValues: {
-      resume: undefined,
-    },
-  });
-
-  const onSubmit = async (data: z.infer<typeof uploadResumeSchema>) => {
-    if (data.resume.length === 0) {
-      return;
-    }
-    const file = data.resume[0];
-    console.log(file);
-  };
-
-  const fileRef = form.register("resume");
-
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant={"default"}>Auto-fill from CV</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Upload Your Resume</DialogTitle>
-          <DialogDescription>
-            Upload your resume for auto-filling.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="resume"
-              render={() => (
-                <FormItem>
-                  <FormLabel>Resume</FormLabel>
-                  <FormControl>
-                    <Input type="file" {...fileRef} accept=".pdf,.doc,.docx" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <DialogFooter>
-              <Button type="submit">Upload CV</Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
   );
 }
 
