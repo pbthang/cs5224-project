@@ -55,26 +55,11 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
 
   function onSubmit(values: PortfolioFormValues) {
     console.log(values);
-    // const myHeaders = new Headers();
-    // myHeaders.append("apikey", "0K8wEbX7JySSuzzbXDgUrcxFMec6WoWd");
-
-    // const requestOptions = {
-    //   method: "GET",
-    //   redirect: "follow",
-    //   headers: myHeaders,
-    // } as RequestInit;
-
-    // const url = `https://api.apilayer.com/resume_parser/url?url=${encodeURI(
-    //   values.url
-    // )}`;
-
-    // console.log(url);
-
-    // fetch(url, requestOptions)
-    //   .then((response) => response.text())
-    //   .then((result) => console.log(result))
-    //   .catch((error) => console.log("error", error));
   }
+
+  const handleIntroGenerate = () => {
+    form.setValue("introduction", "AI-generated introduction");
+  };
 
   return (
     <Form {...form}>
@@ -161,13 +146,16 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
           control={form.control}
           name="introduction"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Introduction</FormLabel>
-              <FormControl>
-                <Textarea placeholder="A Short Introduction" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <>
+              {" "}
+              <FormItem>
+                <FormLabel>Introduction</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="A Short Introduction" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            </>
           )}
         />
         <FormField

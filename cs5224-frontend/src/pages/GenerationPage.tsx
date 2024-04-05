@@ -12,11 +12,11 @@ import UploadResumeDialog from "@/components/UploadResumeDialog";
 
 const formSchema = z.object({
   name: z.string(),
-  headline: z.string(),
+  headline: z.string().optional(),
   email: z.string().email(),
-  linkedin: z.string().url(),
-  github: z.string().url(),
-  website: z.string().url(),
+  linkedin: z.union([z.string().trim().url(), z.literal("")]),
+  github: z.union([z.string().trim().url(), z.literal("")]),
+  website: z.union([z.string().trim().url(), z.literal("")]),
   introduction: z.string(),
   skills: z.array(z.string()),
   education: z.array(

@@ -24,6 +24,8 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { PortfolioFormValues } from "@/pages/GenerationPage";
+import moment from "moment";
+import { LoadingSpinner } from "./ui/spinner";
 
 const uploadResumeSchema = z.object({
   resume: z
@@ -45,23 +47,23 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
   });
 
   const setScannedValues = (values: any) => {
-    const { education, employer, personal_urls, skills } = values.data;
+    const {
+      education,
+      employer,
+      personal_urls,
+      skills,
+      generated_summary_text,
+    } = values.data;
 
     if (education?.length > 0) {
       const updated = education.map((item: any) => ({
         school: item.institute,
-        // dates: Aug 2020 - May 2024
-        dates:
-          new Date(item.from_year, item.from_month).toLocaleString("default", {
-            month: "short",
-            year: "numeric",
-          }) +
-          " - " +
-          new Date(item.to_year, item.to_month).toLocaleString("default", {
-            month: "short",
-            year: "numeric",
-          }),
-        description: `${item.degree} in ${item.course}`,
+        dates: `${
+          item.from_month ? moment().month(item.from_month).format("MMM") : ""
+        } ${item.from_year || ""} - ${
+          item.to_month ? moment().month(item.to_month).format("MMM") : ""
+        } ${item.to_year || ""}`,
+        description: [item.degree, item.course].filter(Boolean).join(", "),
       }));
       setValue("education", updated);
     }
@@ -70,11 +72,9 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
       const updated = employer.map((item: any) => ({
         position: item.role,
         organization: item.company_name,
-        dates:
-          new Date(item.from_year, item.from_month).toLocaleString("default", {
-            month: "short",
-            year: "numeric",
-          }) + (item.is_current ? " - Present" : ""),
+        dates: `${
+          item.from_month && moment().month(item.from_month).format("MMM")
+        } ${item.from_year || ""} ${item.is_current ? "- Present" : ""}`,
         description: item.description,
       }));
       setValue("experience", updated);
@@ -97,14 +97,18 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
           (url: string) => !url.includes("linkedin") && !url.includes("github")
         );
       if (linkedin) {
-        setValue("linkedin", linkedin);
+        setValue("linkedin", "https://" + linkedin);
       }
       if (github) {
-        setValue("github", github);
+        setValue("github", "https://" + github);
       }
       if (website) {
-        setValue("website", website);
+        setValue("website", "https://" + website);
       }
+    }
+
+    if (generated_summary_text) {
+      setValue("introduction", generated_summary_text);
     }
   };
 
@@ -172,6 +176,9 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
             />
             <DialogFooter>
               <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
+                  <LoadingSpinner className={"h-5 w-5 mr-2"} />
+                )}
                 Upload CV
               </Button>
             </DialogFooter>
