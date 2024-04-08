@@ -1,0 +1,64 @@
+{
+  "name": "John Doe",
+  "headline": "A passionate software engineer with a strong background in web development and data visualization",
+  "email": "john@example.com",
+  "img": "https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg",
+  "linkedin": "https://www.example.com",
+  "github": "https://www.example.com",
+  "website": "https://www.example.com",
+  "introduction": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien egestas tincidunt nec nec libero . Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. \n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero. Nullam nec purus eget sapien egestas tincidunt nec nec libero.",
+  "skills": [
+    "Application Programming Interface",
+    "Back End",
+    "Dashboard Software",
+    "Data Visualization",
+    "Flask Framework",
+    "Front End Design",
+    "Graph Database",
+    "Market Research",
+    "Marketing",
+    "Marketing Management",
+    "Neo4j",
+    "Productivity Improvement",
+    "React.js",
+    "Redesign",
+    "Redux",
+    "Systems Design",
+    "Usability Testing",
+    "User Experience",
+    "User Interface",
+    "Web Application"
+  ],
+  "experience": [
+    {
+      "position": "Software Engineering Intern",
+      "organization": "Motivo Inc",
+      "dates": "Aug 20 - Aug 21",
+      "description": "Developed and designed web app (data visualization, training, dashboard) to significantly improve current project workflows\nImplemented graph database (Neo4j), Python Flask (backend/API servers) and React-Redux (frontend) as critical constituents of the overall productivity improvement project"
+    },
+    {
+      "position": "UI/UX Intern",
+      "organization": "GovTech",
+      "dates": "May 20 - Jul 21",
+      "description": "Contributed as part of pioneering “isomer” team to standardize aesthetics and experience across all Singapore Government websites\nDesigned layouts/templates for informational government websites\nLed redesign and standardization of 'Singapore Government Design System' iconography\nSupervised and conducted user testing involving 100 key users and training sessions for 200 super-users"
+    },
+    {
+      "position": "Research Director",
+      "organization": "Nus StartIT ( Technopreneurship Society )",
+      "dates": "Aug 19 - Aug 20",
+      "description": "Led a team of 20 individuals to conduct and present market research on technologies with a growing trend in start-up space\nConceived initiative to match students with start-ups for micro-projects to gain technical experience - successfully matched 12 students to 5 early-stage start-ups over 2 academic semesters NUS School of Computing (SoC)"
+    }
+  ],
+  "education": [
+    {
+      "school": "National University Of Singapore",
+      "dates": "Aug 2015 - Sep 2020",
+      "description": "Bachelor Of Computing, Computer Science"
+    },
+    {
+      "school": "Nus Overseas College, Silicon Valley",
+      "dates": "Sep 2018 - Sep 2019",
+      "description": ""
+    }
+  ]
+}

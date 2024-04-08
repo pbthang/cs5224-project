@@ -1,0 +1,11 @@
+{
+  "name": "portfolio-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ejs": "npx ejs ./asset/template.ejs -f ./asset/data.json -o ./asset/index.html"
+  },
+  "author": "",
+  "license": "ISC"
+}
