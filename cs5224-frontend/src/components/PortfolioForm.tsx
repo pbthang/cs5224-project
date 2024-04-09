@@ -6,30 +6,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./components/ui/form";
-import { Input } from "./components/ui/input";
-import { Button } from "./components/ui/button";
-import { InputTags } from "./components/ui/multitaginput";
-import { Textarea } from "./components/ui/textarea";
-import { Card } from "./components/ui/card";
-import { ScrollArea } from "./components/ui/scroll-area";
+} from "./ui/form";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { InputTags } from "./ui/multitaginput";
+import { Textarea } from "./ui/textarea";
+import { Card } from "./ui/card";
+import { ScrollArea } from "./ui/scroll-area";
 import { CirclePlusIcon, Trash2Icon } from "lucide-react";
 import { useEffect } from "react";
-import { PortfolioFormValues } from "./pages/GenerationPage";
-
-/*
-Portfolio:
-- Name
-- Headline: AI-generated
-- Contact: Email, LinkedIn, GitHub, Website
-- Introduction -> AI-generated text
-- Experience: Position, Organization, From, To, Location, Description
-- Education: School, Degree, From, To, Description
-- Skills:
-	- Summary: AI-generated
-	- Skills: List<String>
-
-*/
+import { PortfolioFormValues } from "../pages/GenerationPage";
 
 interface PortfolioFormProps {
   setFormValues: (values: PortfolioFormValues) => void;
@@ -56,10 +42,6 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
   function onSubmit(values: PortfolioFormValues) {
     console.log(values);
   }
-
-  const handleIntroGenerate = () => {
-    form.setValue("introduction", "AI-generated introduction");
-  };
 
   return (
     <Form {...form}>
@@ -146,16 +128,13 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
           control={form.control}
           name="introduction"
           render={({ field }) => (
-            <>
-              {" "}
-              <FormItem>
-                <FormLabel>Introduction</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="A Short Introduction" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            </>
+            <FormItem>
+              <FormLabel>Introduction</FormLabel>
+              <FormControl>
+                <Textarea placeholder="A Short Introduction" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
         <FormField
@@ -179,7 +158,11 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
           <h3 className="text-xl font-semibold">Education</h3>
         </div>
         <EducationForm eduFieldArr={eduFieldArr} form={form} />
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-end">
+          <Button className="my-2" type="submit">
+            Generate Your Portfolio
+          </Button>
+        </div>
       </form>
     </Form>
   );

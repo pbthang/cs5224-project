@@ -9,6 +9,8 @@ import SignUpPage from "./pages/SignUpPage.tsx";
 import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
 import GenerationPage from "./pages/GenerationPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import PreviewPage from "./pages/PreviewPage.tsx";
+import PreviewLayout from "./layouts/PreviewLayout.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,15 @@ const router = createBrowserRouter([
           { path: "/generate", element: <GenerationPage /> },
           { path: "/profile", element: <ProfilePage /> },
         ],
+      },
+    ],
+  },
+  {
+    element: <PreviewLayout />,
+    children: [
+      {
+        element: <ProtectedLayout />,
+        children: [{ path: "/preview", element: <PreviewPage /> }],
       },
     ],
   },

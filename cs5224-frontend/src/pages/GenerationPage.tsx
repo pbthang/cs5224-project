@@ -1,4 +1,4 @@
-import PortfolioForm from "@/PortfolioForm";
+import PortfolioForm from "@/components/PortfolioForm";
 import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/clerk-react";
@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import useLocalStorage from "use-local-storage";
 import { z } from "zod";
 import UploadResumeDialog from "@/components/UploadResumeDialog";
+import { ExternalLinkIcon } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string(),
@@ -94,7 +95,14 @@ function GenerationPage() {
           <Button asChild className="mr-2 text-white" variant={"link"}>
             <Link to="/">Back to Home</Link>
           </Button>
-          <UploadResumeDialog setValue={form.setValue} />
+          <UploadResumeDialog portfolioForm={form} />
+          <Button asChild className="ml-2" variant={"default"}>
+            {/* open link in new tab */}
+            <Link to="/preview" target="_blank">
+              <ExternalLinkIcon size={14} className="mr-1" />
+              Preview
+            </Link>
+          </Button>
           <Button onClick={clearForm} className="ml-4" variant={"secondary"}>
             Reset Form
           </Button>

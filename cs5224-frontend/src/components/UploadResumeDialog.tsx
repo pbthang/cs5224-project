@@ -26,6 +26,7 @@ import { Input } from "./ui/input";
 import { PortfolioFormValues } from "@/pages/GenerationPage";
 import moment from "moment";
 import { LoadingSpinner } from "./ui/spinner";
+import { FileTextIcon } from "lucide-react";
 
 const uploadResumeSchema = z.object({
   resume: z
@@ -34,10 +35,10 @@ const uploadResumeSchema = z.object({
 });
 
 interface UploadResumeDialogProps {
-  setValue: ReturnType<typeof useForm<PortfolioFormValues>>["setValue"];
+  portfolioForm: ReturnType<typeof useForm<PortfolioFormValues>>;
 }
 
-function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
+function UploadResumeDialog({ portfolioForm }: UploadResumeDialogProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const form = useForm<z.infer<typeof uploadResumeSchema>>({
     resolver: zodResolver(uploadResumeSchema),
@@ -47,13 +48,7 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
   });
 
   const setScannedValues = (values: any) => {
-    const {
-      education,
-      employer,
-      personal_urls,
-      skills,
-      generated_summary_text,
-    } = values.data;
+    const { education, employer, personal_urls, skills } = values.data;
 
     if (education?.length > 0) {
       const updated = education.map((item: any) => ({
@@ -65,7 +60,7 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
         } ${item.to_year || ""}`,
         description: [item.degree, item.course].filter(Boolean).join(", "),
       }));
-      setValue("education", updated);
+      portfolioForm.setValue("education", updated);
     }
 
     if (employer?.length > 0) {
@@ -77,11 +72,11 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
         } ${item.from_year || ""} ${item.is_current ? "- Present" : ""}`,
         description: item.description,
       }));
-      setValue("experience", updated);
+      portfolioForm.setValue("experience", updated);
     }
 
     if (skills?.overall_skills?.length > 0) {
-      setValue("skills", skills.overall_skills);
+      portfolioForm.setValue("skills", skills.overall_skills);
     }
 
     if (personal_urls?.length > 0) {
@@ -97,18 +92,14 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
           (url: string) => !url.includes("linkedin") && !url.includes("github")
         );
       if (linkedin) {
-        setValue("linkedin", "https://" + linkedin);
+        portfolioForm.setValue("linkedin", "https://" + linkedin);
       }
       if (github) {
-        setValue("github", "https://" + github);
+        portfolioForm.setValue("github", "https://" + github);
       }
       if (website) {
-        setValue("website", "https://" + website);
+        portfolioForm.setValue("website", "https://" + website);
       }
-    }
-
-    if (generated_summary_text) {
-      setValue("introduction", generated_summary_text);
     }
   };
 
@@ -135,6 +126,35 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
 
       setScannedValues(data);
 
+      console.log(portfolioForm.getValues("skills"));
+
+      const payload = {
+        name: portfolioForm.getValues("name"),
+        skills: portfolioForm.getValues("skills"),
+        education: portfolioForm.getValues("education"),
+        experience: portfolioForm.getValues("experience"),
+      };
+
+      console.log(payload);
+
+      // get introduction
+      const { data: introData } = await axios.post(
+        import.meta.env.VITE_OPENAI_BACKEND_URL,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (introData?.Introduction) {
+        portfolioForm.setValue("introduction", introData.Introduction);
+      }
+      if (introData?.Headline) {
+        portfolioForm.setValue("headline", introData.Headline);
+      }
+
       form.reset();
       toast.success("Resume scanned successfully.");
       setDialogOpen(false);
@@ -150,7 +170,10 @@ function UploadResumeDialog({ setValue }: UploadResumeDialogProps) {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"}>Auto-fill from CV</Button>
+        <Button variant={"default"}>
+          <FileTextIcon size={14} className="mr-1" />
+          Auto-fill
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
