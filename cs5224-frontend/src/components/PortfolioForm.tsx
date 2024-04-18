@@ -16,6 +16,11 @@ import { ScrollArea } from "./ui/scroll-area";
 import { CirclePlusIcon, Trash2Icon } from "lucide-react";
 import { useEffect } from "react";
 import { PortfolioFormValues } from "../pages/GenerationPage";
+import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { LoadingSpinner } from "./ui/spinner";
 
 interface PortfolioFormProps {
   setFormValues: (values: PortfolioFormValues) => void;
@@ -23,6 +28,8 @@ interface PortfolioFormProps {
 }
 
 function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
+  const { user } = useUser();
+  const navigate = useNavigate();
   useEffect(() => {
     const subscription = form.watch((values) => {
       setFormValues(values as PortfolioFormValues);
@@ -39,91 +46,111 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
     name: "education",
   });
 
-  function onSubmit(values: PortfolioFormValues) {
-    console.log(values);
+  async function onSubmit(values: PortfolioFormValues) {
+    try {
+      const resp = await axios.post(import.meta.env.VITE_GENERATE_BACKEND_URL, {
+        ...values,
+        theme: "corporate",
+        img:
+          user?.imageUrl ||
+          "https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg",
+        sendToEmail: user?.primaryEmailAddress?.emailAddress,
+      });
+
+      navigate(`/generate/success`, { state: { url: resp.data.url } });
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to generate portfolio");
+    }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="John Doe" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="headline"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Headline</FormLabel>
-              <FormControl>
-                <Input placeholder="Software Engineer | Writer" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="john@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="linkedin"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>LinkedIn URL</FormLabel>
-              <FormControl>
-                <Input placeholder="Your LinkedIn URL" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="github"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>GitHub URL</FormLabel>
-              <FormControl>
-                <Input placeholder="Your GitHub URL" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="website"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Website URL</FormLabel>
-              <FormControl>
-                <Input placeholder="Your Website URL" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-4 flex-wrap">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className=" basis-52 flex-grow">
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="John Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="headline"
+            render={({ field }) => (
+              <FormItem className="basis-96 flex-grow-[3]">
+                <FormLabel>Headline</FormLabel>
+                <FormControl>
+                  <Input placeholder="Software Engineer | Writer" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex gap-4 flex-wrap">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="basis-80 flex-grow">
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="john@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="linkedin"
+            render={({ field }) => (
+              <FormItem className="basis-80 flex-grow">
+                <FormLabel>LinkedIn URL</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your LinkedIn URL" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex gap-4 flex-wrap">
+          <FormField
+            control={form.control}
+            name="github"
+            render={({ field }) => (
+              <FormItem className="basis-80 flex-grow">
+                <FormLabel>GitHub URL</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your GitHub URL" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="website"
+            render={({ field }) => (
+              <FormItem className="basis-80 flex-grow">
+                <FormLabel>Website URL</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your Website URL" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="introduction"
@@ -159,7 +186,14 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
         </div>
         <EducationForm eduFieldArr={eduFieldArr} form={form} />
         <div className="flex justify-end">
-          <Button className="my-2" type="submit">
+          <Button
+            className="my-2"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting && (
+              <LoadingSpinner className="w-4 h-4 mr-2" />
+            )}
             Generate Your Portfolio
           </Button>
         </div>

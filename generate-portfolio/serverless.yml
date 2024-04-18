@@ -1,0 +1,19 @@
+service: generate-portfolio
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  iam:
+    role: arn:aws:iam::381492057243:role/LabRole
+  environment:
+    AWS_S3_BUCKET: cs5224-2024-team24
+    AWS_S3_REGION: us-east-1
+    AWS_CLOUDFRONT_DIST: d1562wb5u3etn8
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi: "*"

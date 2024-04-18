@@ -31,6 +31,7 @@ function PreviewPage() {
       title="Preview"
       srcDoc={ejs.render(template, {
         ...values,
+        theme: "corporate",
         img: user?.imageUrl,
       })}
       className="w-full h-screen border-none"

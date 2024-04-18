@@ -19,22 +19,26 @@ const formSchema = z.object({
   github: z.union([z.string().trim().url(), z.literal("")]),
   website: z.union([z.string().trim().url(), z.literal("")]),
   introduction: z.string(),
-  skills: z.array(z.string()),
-  education: z.array(
-    z.object({
-      school: z.string(),
-      dates: z.string(),
-      description: z.string(),
-    })
-  ),
-  experience: z.array(
-    z.object({
-      position: z.string(),
-      organization: z.string(),
-      dates: z.string(),
-      description: z.string(),
-    })
-  ),
+  skills: z.array(z.string().trim()).max(32),
+  education: z
+    .array(
+      z.object({
+        school: z.string(),
+        dates: z.string(),
+        description: z.string(),
+      })
+    )
+    .max(8),
+  experience: z
+    .array(
+      z.object({
+        position: z.string(),
+        organization: z.string(),
+        dates: z.string(),
+        description: z.string(),
+      })
+    )
+    .max(8),
 });
 
 export type PortfolioFormValues = z.infer<typeof formSchema>;
@@ -97,7 +101,6 @@ function GenerationPage() {
           </Button>
           <UploadResumeDialog portfolioForm={form} />
           <Button asChild className="ml-2" variant={"default"}>
-            {/* open link in new tab */}
             <Link to="/preview" target="_blank">
               <ExternalLinkIcon size={14} className="mr-1" />
               Preview
@@ -108,7 +111,7 @@ function GenerationPage() {
           </Button>
         </div>
       </Hero>
-      <div className="px-8 md:px-16 py-10 space-y-10">
+      <div className="px-8 md:px-16 py-10 space-y-10 max-w-6xl m-auto">
         <PortfolioForm form={form} setFormValues={setFormValues} />
       </div>
     </div>

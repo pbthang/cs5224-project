@@ -11,6 +11,7 @@ import GenerationPage from "./pages/GenerationPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import PreviewPage from "./pages/PreviewPage.tsx";
 import PreviewLayout from "./layouts/PreviewLayout.tsx";
+import GenerateSuccessPage from "./pages/GenerateSuccessPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
         path: "/",
         children: [
           { path: "/generate", element: <GenerationPage /> },
+          { path: "/generate/success", element: <GenerateSuccessPage /> },
           { path: "/profile", element: <ProfilePage /> },
         ],
       },

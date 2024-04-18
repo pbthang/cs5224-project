@@ -40,7 +40,7 @@ export const InputTags = forwardRef<HTMLInputElement, InputTagsProps>(
                 addPendingDataPoint();
               }
             }}
-            className="rounded-r-none"
+            className="rounded-r-none w-80"
             {...props}
             ref={ref}
           />
