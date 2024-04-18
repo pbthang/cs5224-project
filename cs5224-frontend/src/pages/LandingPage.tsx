@@ -123,18 +123,18 @@ export const LandingPage = () => {
         <div className="flex gap-6 justify-center my-12">
           <LandingSection
             title="Use AI to Create a Marketable Portfolio"
-            imgurl="src/assets/image1.webp"
+            imgurl="/image1.webp"
             content="With OpenAI technology, we will help you to create and build your own portfolio."
           />
           <LandingSection
             title="Free Hosting on AWS"
-            imgurl="src/assets/image2.webp"
+            imgurl="/image2.webp"
             content="Receive a link that you can use to share your portfolio with others."
           />
 
           <LandingSection
             title="Upload your Resume to get Started"
-            imgurl="src/assets/image3.webp"
+            imgurl="/image3.webp"
             content="Upload your Resume and we will magically extract out useful information."
           />
         </div>
