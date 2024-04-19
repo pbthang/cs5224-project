@@ -34,19 +34,21 @@ import { useState } from "react";
 
 const columns: ColumnDef<PortfolioArchiveEntry>[] = [
   {
-    accessorKey: "date",
+    accessorKey: "createdAt",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Date
+          Created At
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{moment(row.getValue("date")).calendar()}</div>,
+    cell: ({ row }) => (
+      <div>{moment(row.getValue("createdAt")).calendar()}</div>
+    ),
   },
   {
     accessorKey: "url",
@@ -111,7 +113,7 @@ function ProfilePage() {
         title="Profile"
         subtitle={`Hi, ${user?.firstName}. Welcome to your profile page!`}
       >
-        <Button asChild>
+        <Button variant={"secondary"} asChild>
           <Link to="/">Back to Home</Link>
         </Button>
       </Hero>

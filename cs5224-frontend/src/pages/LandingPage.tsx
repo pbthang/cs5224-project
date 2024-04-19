@@ -102,7 +102,7 @@ export const LandingPage = () => {
         subtitle="Build your Portfolio within a few clicks!"
       >
         <SignedIn>
-          <Button asChild className="mr-4">
+          <Button asChild className="mr-4" variant={"secondary"}>
             <Link to="/profile">Profile</Link>
           </Button>
           <Button asChild>

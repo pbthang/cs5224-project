@@ -31,11 +31,11 @@ function GenerateSuccessPage() {
       !portfolioArchive.some((entry) => entry.url === state.url)
     ) {
       setPortfolioArchive([
-        ...portfolioArchive,
         {
           url: state.url,
           createdAt: new Date(),
         },
+        ...portfolioArchive,
       ]);
     }
   }, []);
@@ -45,7 +45,17 @@ function GenerateSuccessPage() {
       <Hero
         title="Portfolio Generated!"
         subtitle="Your webpage has been generated successfully!"
-      ></Hero>
+      >
+        <Button asChild className="mr-2 text-white" variant={"link"}>
+          <Link to="/">Back to Home</Link>
+        </Button>
+        <Button asChild className="mr-2" variant="secondary">
+          <Link to="/profile">View Archive</Link>
+        </Button>
+        <Button asChild variant="default">
+          <Link to="/generate">Generate Another</Link>
+        </Button>
+      </Hero>
       <div className="flex justify-center">
         <Card className="max-w-6xl m-auto my-20">
           <CardHeader className="flex-shrink-0">
