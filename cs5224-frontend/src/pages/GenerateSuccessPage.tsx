@@ -10,10 +10,35 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { CopyIcon, ExternalLinkIcon } from "lucide-react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import useLocalStorage from "use-local-storage";
+
+export interface PortfolioArchiveEntry {
+  url: string;
+  createdAt: Date;
+}
 
 function GenerateSuccessPage() {
   const { state } = useLocation();
+  const [portfolioArchive, setPortfolioArchive] = useLocalStorage<
+    PortfolioArchiveEntry[]
+  >("portfolioArchive", []);
+
+  useEffect(() => {
+    if (
+      state?.url &&
+      !portfolioArchive.some((entry) => entry.url === state.url)
+    ) {
+      setPortfolioArchive([
+        ...portfolioArchive,
+        {
+          url: state.url,
+          createdAt: new Date(),
+        },
+      ]);
+    }
+  }, []);
 
   return (
     <div>

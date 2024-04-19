@@ -102,7 +102,7 @@ function GenerationPage() {
           <UploadResumeDialog portfolioForm={form} />
           <Button asChild className="ml-2" variant={"default"}>
             <Link to="/preview" target="_blank">
-              <ExternalLinkIcon size={14} className="mr-1" />
+              <ExternalLinkIcon size={14} className="mr-2" />
               Preview
             </Link>
           </Button>
@@ -111,7 +111,8 @@ function GenerationPage() {
           </Button>
         </div>
       </Hero>
-      <div className="px-8 md:px-16 py-10 space-y-10 max-w-6xl m-auto">
+      <div className="px-8 md:px-16 py-10 space-y-10 max-w-5xl m-auto">
+        <h1 className="text-2xl font-bold text-center">Portfolio Form</h1>
         <PortfolioForm form={form} setFormValues={setFormValues} />
       </div>
     </div>

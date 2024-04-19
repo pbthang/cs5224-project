@@ -171,7 +171,7 @@ function UploadResumeDialog({ portfolioForm }: UploadResumeDialogProps) {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button variant={"default"}>
-          <FileTextIcon size={14} className="mr-1" />
+          <FileTextIcon size={14} className="mr-2" />
           Auto-fill
         </Button>
       </DialogTrigger>

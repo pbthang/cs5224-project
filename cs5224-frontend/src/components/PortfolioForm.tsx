@@ -13,7 +13,7 @@ import { InputTags } from "./ui/multitaginput";
 import { Textarea } from "./ui/textarea";
 import { Card } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
-import { CirclePlusIcon, Trash2Icon } from "lucide-react";
+import { CirclePlusIcon, RocketIcon, Trash2Icon } from "lucide-react";
 import { useEffect } from "react";
 import { PortfolioFormValues } from "../pages/GenerationPage";
 import axios from "axios";
@@ -30,6 +30,7 @@ interface PortfolioFormProps {
 function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
   const { user } = useUser();
   const navigate = useNavigate();
+
   useEffect(() => {
     const subscription = form.watch((values) => {
       setFormValues(values as PortfolioFormValues);
@@ -65,17 +66,107 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <div className="flex gap-4 flex-wrap">
+    <Card className="p-8">
+      <Button onClick={() => {}} className="mb-4">
+        Button
+      </Button>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <div className="flex gap-4 flex-wrap">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className=" basis-52 flex-grow">
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John Doe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="headline"
+              render={({ field }) => (
+                <FormItem className="basis-96 flex-grow-[3]">
+                  <FormLabel>Headline</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Software Engineer | Writer"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex gap-4 flex-wrap">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="basis-80 flex-grow">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="john@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="linkedin"
+              render={({ field }) => (
+                <FormItem className="basis-80 flex-grow">
+                  <FormLabel>LinkedIn URL</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your LinkedIn URL" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex gap-4 flex-wrap">
+            <FormField
+              control={form.control}
+              name="github"
+              render={({ field }) => (
+                <FormItem className="basis-80 flex-grow">
+                  <FormLabel>GitHub URL</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your GitHub URL" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem className="basis-80 flex-grow">
+                  <FormLabel>Website URL</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your Website URL" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
-            name="name"
+            name="introduction"
             render={({ field }) => (
-              <FormItem className=" basis-52 flex-grow">
-                <FormLabel>Name</FormLabel>
+              <FormItem>
+                <FormLabel>Introduction</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Textarea placeholder="A Short Introduction" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,122 +174,41 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
           />
           <FormField
             control={form.control}
-            name="headline"
+            name="skills"
             render={({ field }) => (
-              <FormItem className="basis-96 flex-grow-[3]">
-                <FormLabel>Headline</FormLabel>
+              <FormItem>
+                <FormLabel>Skills</FormLabel>
                 <FormControl>
-                  <Input placeholder="Software Engineer | Writer" {...field} />
+                  <InputTags {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        </div>
-        <div className="flex gap-4 flex-wrap">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="basis-80 flex-grow">
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="john@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="linkedin"
-            render={({ field }) => (
-              <FormItem className="basis-80 flex-grow">
-                <FormLabel>LinkedIn URL</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your LinkedIn URL" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="flex gap-4 flex-wrap">
-          <FormField
-            control={form.control}
-            name="github"
-            render={({ field }) => (
-              <FormItem className="basis-80 flex-grow">
-                <FormLabel>GitHub URL</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your GitHub URL" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="website"
-            render={({ field }) => (
-              <FormItem className="basis-80 flex-grow">
-                <FormLabel>Website URL</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your Website URL" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <FormField
-          control={form.control}
-          name="introduction"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Introduction</FormLabel>
-              <FormControl>
-                <Textarea placeholder="A Short Introduction" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="skills"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Skills</FormLabel>
-              <FormControl>
-                <InputTags {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex gap-1 justify-between items-center">
-          <h3 className="text-xl font-semibold">Experience</h3>
-        </div>
-        <ExprForm exprFieldArr={exprFieldArr} form={form} />
-        <div className="flex gap-1 justify-between items-center">
-          <h3 className="text-xl font-semibold">Education</h3>
-        </div>
-        <EducationForm eduFieldArr={eduFieldArr} form={form} />
-        <div className="flex justify-end">
-          <Button
-            className="my-2"
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && (
-              <LoadingSpinner className="w-4 h-4 mr-2" />
-            )}
-            Generate Your Portfolio
-          </Button>
-        </div>
-      </form>
-    </Form>
+          <div className="flex gap-1 justify-between items-center">
+            <h3 className="text-xl font-semibold">Experience</h3>
+          </div>
+          <ExprForm exprFieldArr={exprFieldArr} form={form} />
+          <div className="flex gap-1 justify-between items-center">
+            <h3 className="text-xl font-semibold">Education</h3>
+          </div>
+          <EducationForm eduFieldArr={eduFieldArr} form={form} />
+          <div className="flex justify-end">
+            <Button
+              className="my-2"
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && (
+                <LoadingSpinner className="w-4 h-4 mr-2" />
+              )}
+              <RocketIcon className="w-4 h-4 mr-2" />
+              Generate Your Portfolio
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </Card>
   );
 }
 
