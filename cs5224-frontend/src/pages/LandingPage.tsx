@@ -119,7 +119,7 @@ export const LandingPage = () => {
         </SignedOut>
       </Hero>
       <div className="px-8 md:px-16 py-10">
-        <h2 className="text-4xl font-bold text-center">Why PortfolioBuildr?</h2>
+        <h2 className="text-4xl font-bold text-center">Why PocketPortfolio?</h2>
         <div className="flex gap-6 justify-center my-12">
           <LandingSection
             title="Use AI to Create a Marketable Portfolio"
@@ -140,7 +140,7 @@ export const LandingPage = () => {
         </div>
 
         <h2 className="text-4xl font-bold text-center">
-          How to Use PortfolioBuildr?
+          How to Use PocketPortfolio?
         </h2>
         <div className="flex flex-row justify-around items-stretch my-12">
           <Carousel className="max-w-4xl">

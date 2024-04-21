@@ -67,9 +67,6 @@ function PortfolioForm({ setFormValues, form }: PortfolioFormProps) {
 
   return (
     <Card className="p-8">
-      <Button onClick={() => {}} className="mb-4">
-        Button
-      </Button>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="flex gap-4 flex-wrap">

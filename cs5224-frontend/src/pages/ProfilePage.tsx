@@ -117,11 +117,11 @@ function ProfilePage() {
           <Link to="/">Back to Home</Link>
         </Button>
       </Hero>
-      <div className="px-8 md:px-16 py-10 space-y-4">
+      <div className="px-8 md:px-16 py-10">
         <h1 className="text-2xl font-bold text-center">
           Generated Portfolio Webpages
         </h1>
-        <div className="rounded-md border max-w-4xl m-auto">
+        <div className="rounded-md border max-w-4xl m-auto mt-6">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
